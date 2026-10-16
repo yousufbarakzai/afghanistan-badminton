@@ -1,154 +1,207 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Afghanistan Badminton</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Afghanistan Badminton Admin</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#172033}
-header{background:#071b36;color:white;padding:22px 15px;text-align:center}
-header h1{margin:0;font-size:27px}
-header p{color:#cbd5e1;margin-bottom:0}
-nav{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;padding:12px;background:#102b50}
-nav button{border:0;padding:11px 15px;border-radius:7px;background:#203f68;color:white;cursor:pointer;font-weight:bold}
-nav button:hover{background:#dc2626}
-.hero{background:linear-gradient(120deg,#071b36,#174b80);color:white;padding:45px 20px;text-align:center}
-.hero h2{font-size:30px;margin:0 0 12px}
-.hero p{line-height:1.7}
-.container{max-width:1050px;margin:25px auto;padding:0 15px}
-.section{display:none}
-.section.active{display:block}
-h2.title{border-left:5px solid #dc2626;padding-left:12px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
-.card{background:white;border-radius:12px;padding:20px;box-shadow:0 4px 15px #0000000d}
-.card h3{margin-top:0;color:#12365f}
-.badge{display:inline-block;background:#e1edff;color:#174b80;padding:5px 10px;border-radius:20px;font-size:12px}
-.stat{text-align:center}
-.stat strong{display:block;font-size:30px;color:#dc2626}
-table{width:100%;border-collapse:collapse;background:white}
-th,td{padding:13px 10px;text-align:left;border-bottom:1px solid #e5e7eb}
-th{background:#102b50;color:white}
-input,select{width:100%;padding:12px;margin:7px 0 13px;border:1px solid #cbd5e1;border-radius:7px}
-.action{background:#dc2626;color:white;border:0;border-radius:7px;padding:12px 17px;cursor:pointer}
-.note{background:#fff7ed;padding:12px;border-radius:8px;color:#9a3412;line-height:1.6}
-footer{background:#071b36;color:#cbd5e1;text-align:center;padding:24px;margin-top:40px}
-@media(max-width:500px){header h1{font-size:22px}.hero h2{font-size:25px}th,td{padding:10px 6px;font-size:13px}}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f1f5f9;
+  color:#172033;
+}
+header{
+  background:#071b36;
+  color:white;
+  padding:25px 15px;
+  text-align:center;
+}
+header h1{margin:0 0 8px}
+.container{
+  max-width:600px;
+  margin:35px auto;
+  padding:15px;
+}
+.card{
+  background:white;
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 5px 20px #00000010;
+}
+input{
+  display:block;
+  width:100%;
+  padding:13px;
+  margin:10px 0 18px;
+  border:1px solid #cbd5e1;
+  border-radius:8px;
+}
+button{
+  width:100%;
+  padding:13px;
+  border:0;
+  border-radius:8px;
+  background:#dc2626;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+button:disabled{opacity:.6}
+#dashboard{display:none}
+#message{
+  margin-top:15px;
+  line-height:1.6;
+  overflow-wrap:anywhere;
+}
+.success{color:green}
+.error{color:#dc2626}
+footer{text-align:center;padding:25px;color:#64748b}
 </style>
 </head>
-<body><header>
-<h1>🏸 AFGHANISTAN BADMINTON</h1>
-<p>Players • Rankings • Tournaments • Results</p>
-</header><nav>
-<button onclick="showPage('home')">Home</button>
-<button onclick="showPage('players')">Players</button>
-<button onclick="showPage('rankings')">Rankings</button>
-<button onclick="showPage('tournaments')">Tournaments</button>
-<button onclick="showPage('admin')">Admin</button>
-</nav><div id="home" class="section active">
-<div class="hero">
-<h2>Welcome to Afghanistan Badminton</h2>
-<p>Your destination for Afghan badminton players, national rankings and tournaments.</p>
-<button class="action" onclick="showPage('players')">Explore Players</button>
-</div>
+
+<body>
+
+<header>
+  <h1>🏸 Afghanistan Badminton</h1>
+  <p>Administrator Dashboard</p>
+</header>
+
 <div class="container">
-<div class="grid">
-<div class="card stat"><strong id="playerCount">0</strong>Registered Players</div>
-<div class="card stat"><strong>8</strong>Ranking Positions</div>
-<div class="card stat"><strong>2026</strong>Season</div>
+
+  <div class="card" id="loginCard">
+    <h2>Admin Login</h2>
+    <p>Sign in with your authorized administrator account.</p>
+
+    <form id="loginForm">
+      <label for="email">Email address</label>
+      <input id="email" type="email"
+        placeholder="Enter your email"
+        autocomplete="username" required>
+
+      <label for="password">Password</label>
+      <input id="password" type="password"
+        placeholder="Enter your password"
+        autocomplete="current-password" required>
+
+      <button id="loginButton" type="submit">Login</button>
+    </form>
+
+    <div id="message" role="status"></div>
+  </div>
+
+  <div class="card" id="dashboard">
+    <h2>Admin Dashboard ✅</h2>
+    <p id="adminEmail"></p>
+    <p class="success">
+      Your account has been verified as an administrator.
+    </p>
+    <p>
+      The secure login is working. Player management will be connected
+      after confirming the database columns.
+    </p>
+    <button id="logoutButton">Logout</button>
+  </div>
+
 </div>
-<h2 class="title">Latest News</h2>
-<div class="card">
-<h3>Afghanistan Badminton Updates</h3>
-<p>Follow player achievements, tournament announcements and competition results.</p>
-<span class="badge">National Badminton</span>
-</div>
-</div>
-</div><div id="players" class="section container">
-<h2 class="title">Afghanistan Players</h2>
-<p>Registered players will appear here.</p>
-<div id="playersList" class="grid"></div>
-</div><div id="rankings" class="section container">
-<h2 class="title">National Rankings</h2>
-<p>Sample rankings — official results must be added by the administrator.</p>
-<div style="overflow-x:auto">
-<table>
-<thead><tr><th>Rank</th><th>Player</th><th>Category</th><th>Points</th></tr></thead>
-<tbody>
-<tr><td>1</td><td>To be announced</td><td>Men's Singles</td><td>—</td></tr>
-<tr><td>2</td><td>To be announced</td><td>Men's Singles</td><td>—</td></tr>
-<tr><td>3</td><td>To be announced</td><td>Men's Singles</td><td>—</td></tr>
-<tr><td>4</td><td>To be announced</td><td>Men's Singles</td><td>—</td></tr>
-<tr><td>5</td><td>To be announced</td><td>Men's Singles</td><td>—</td></tr>
-<tr><td>6</td><td>To be announced</td><td>Men's Singles</td><td>—</td></tr>
-<tr><td>7</td><td>To be announced</td><td>Men's Singles</td><td>—</td></tr>
-<tr><td>8</td><td>To be announced</td><td>Men's Singles</td><td>—</td></tr>
-</tbody>
-</table>
-</div>
-</div><div id="tournaments" class="section container">
-<h2 class="title">Tournaments & Results</h2>
-<div class="grid">
-<div class="card">
-<h3>Upcoming Tournaments</h3>
-<p>New tournament dates will be announced here.</p>
-<span class="badge">Upcoming</span>
-</div>
-<div class="card">
-<h3>Past Results</h3>
-<p>Official match results will be published here after competitions.</p>
-<span class="badge">Results</span>
-</div>
-</div>
-</div><div id="admin" class="section container">
-<h2 class="title">Administrator Area</h2>
-<div class="card">
-<p class="note">This is only a preview of the admin page. It does not yet provide secure login or save players to the database. We will connect it to Supabase in the next steps.</p>
-<h3>Add a Player — Preview Only</h3>
-<label>Player Name</label>
-<input id="playerName" placeholder="Enter player name">
-<label>Category</label>
-<select id="playerCategory">
-<option>Men's Singles</option>
-<option>Women's Singles</option>
-<option>Men's Doubles</option>
-<option>Women's Doubles</option>
-<option>Mixed Doubles</option>
-<option>Junior</option>
-</select>
-<button class="action" onclick="addPreviewPlayer()">Add Preview Player</button>
-<p id="adminMessage"></p>
-</div>
-</div><footer>
-<p>Afghanistan Badminton</p>
-<p>Supporting the future of badminton in Afghanistan 🇦🇫</p>
-</footer><script>
-function showPage(id){
-document.querySelectorAll('.section').forEach(function(s){
-s.classList.remove('active');
+
+<footer>
+  Afghanistan Badminton 🇦🇫
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL =
+  "https://rwzyvznhadmcwfpmphzj.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_l7fIuTL4YVNC93qDYILrzw_2pTDRftA";
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+const loginForm = document.getElementById("loginForm");
+const loginButton = document.getElementById("loginButton");
+const message = document.getElementById("message");
+
+function showMessage(text, isError = true) {
+  message.textContent = text;
+  message.className = isError ? "error" : "success";
+}
+
+async function verifyAdmin() {
+  const { data: { user }, error: userError } =
+    await db.auth.getUser();
+
+  if (userError || !user) {
+    document.getElementById("loginCard").style.display = "block";
+    document.getElementById("dashboard").style.display = "none";
+    return;
+  }
+
+  const { data, error } = await db.rpc("is_admin");
+
+  if (error || data !== true) {
+    await db.auth.signOut();
+    showMessage(
+      "This account is not authorized as an administrator. " +
+      "Check the admin_users table and database permissions."
+    );
+    return;
+  }
+
+  document.getElementById("loginCard").style.display = "none";
+  document.getElementById("dashboard").style.display = "block";
+  document.getElementById("adminEmail").textContent =
+    "Signed in as: " + (user.email || "Administrator");
+}
+
+loginForm.addEventListener("submit", async function(event) {
+  event.preventDefault();
+
+  loginButton.disabled = true;
+  showMessage("Signing in...", false);
+
+  try {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    const { error } = await db.auth.signInWithPassword({
+      email: email,
+      password: password
+    });
+
+    if (error) {
+      showMessage("Login failed: " + error.message);
+      return;
+    }
+
+    await verifyAdmin();
+
+  } catch (error) {
+    showMessage("Something went wrong. Please try again.");
+  } finally {
+    loginButton.disabled = false;
+  }
 });
-document.getElementById(id).classList.add('active');
-window.scrollTo({top:0,behavior:'smooth'});
-}
-let previewPlayers=[];
-function addPreviewPlayer(){
-const name=document.getElementById('playerName').value.trim();
-const category=document.getElementById('playerCategory').value;
-if(!name){
-document.getElementById('adminMessage').textContent='Please enter a player name.';
-return;
-}
-previewPlayers.push({name:name,category:category});
-document.getElementById('playersList').innerHTML=previewPlayers.map(function(p){
-return '<div class="card"><h3>'+escapeHTML(p.name)+'</h3><span class="badge">'+escapeHTML(p.category)+'</span></div>';
-}).join('');
-document.getElementById('playerCount').textContent=previewPlayers.length;
-document.getElementById('adminMessage').textContent='Preview player added. This is not saved permanently.';
-document.getElementById('playerName').value='';
-}
-function escapeHTML(value){
-return value.replace(/[&<>"']/g,function(c){
-return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
-});
-}
-</script></body>
+
+document.getElementById("logoutButton").addEventListener(
+  "click", async function() {
+    await db.auth.signOut();
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("loginCard").style.display = "block";
+    document.getElementById("password").value = "";
+    showMessage("You have logged out.", false);
+  }
+);
+
+verifyAdmin();
+</script>
+
+</body>
 </html>
